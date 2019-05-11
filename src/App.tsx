@@ -1,26 +1,23 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Route, Switch } from "react-router-dom";
+import logo from "./logo.svg";
+import "./App.css";
+import { Home } from "./components/home";
+import { Resources } from "./components/resources";
+import { Gallery } from "./components/gallery";
+import { Simulator } from "./components/simulator";
 
 const App: React.FC = () => {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Switch>
+        <Route path="/resources" component={Resources} />
+        <Route path="/gallery" component={Gallery} />
+        <Route path="/simulator" component={Simulator} />
+        <Route path="/" component={Home} />
+      </Switch>
     </div>
   );
-}
+};
 
 export default App;
