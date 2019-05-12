@@ -13,7 +13,12 @@ import { Quotes } from "./quotes";
 export function Banner(props: any) {
   return (
     <Jumbotron>
-      <img src="images/ant.svg" alt="ant-logo" width="128" height="128" />
+      <img
+        src="images/ant.svg"
+        alt="Ant by FELIX FX from the Noun Project"
+        width="128"
+        height="128"
+      />
       <h1 className="display-3">Langton's Ant Simulator</h1>
       <div className="lead pt-5">
         <Quotes delay="10000" />
