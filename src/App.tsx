@@ -1,10 +1,10 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 import "./App.css";
-import { Home } from "./components/home";
-import { Resources } from "./components/resources";
-import { Gallery } from "./components/gallery";
-import { Simulator } from "./components/simulator";
+import { Home } from "./components/home/home";
+import { Resources } from "./components/resources/resources";
+import { Gallery } from "./components/gallery/gallery";
+import { Simulator } from "./components/simulator/simulator";
 
 const App: React.FC = () => {
   return (

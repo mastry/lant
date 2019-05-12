@@ -1,5 +1,5 @@
 import React from "react";
-import antLogo from "../images/ant.svg";
+import antLogo from "../../images/ant.svg";
 
 export interface ILogoProps {
   width: number;
