@@ -18,7 +18,7 @@ export function Banner(props: any) {
       <Logo width={128} height={128} />
       <h1 className="display-3">Langton's Ant Simulator</h1>
       <div className="lead pt-5">
-        <Quotes delay="10000" />
+        <Quotes delay={10000} />
       </div>
       <hr className="my-2" />
       <Row className="mt-5">

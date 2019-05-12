@@ -1,10 +1,14 @@
 import React from "react";
 import { Fade } from "reactstrap";
 
-export class Quotes extends React.Component<any, any> {
+export interface IQuoteProps {
+  delay: number;
+}
+
+export class Quotes extends React.Component<IQuoteProps, any> {
   private timerID: number;
 
-  constructor(props: any) {
+  constructor(props: IQuoteProps) {
     super(props);
     this.state = { quote: 0, quoteIsVisible: true };
     this.timerID = 0;
