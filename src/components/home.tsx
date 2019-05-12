@@ -1,14 +1,5 @@
 import React from "react";
-import {
-  Card,
-  Row,
-  Col,
-  CardText,
-  CardHeader,
-  CardLink,
-  Container,
-  CardBody
-} from "reactstrap";
+import { Row, Col, Container } from "reactstrap";
 import { Banner } from "./banner";
 
 export function Home(props: any) {
