@@ -1,8 +1,19 @@
 import React from "react";
-import ComingSoon from "../shared/ComingSoon";
+import AntGrid from "./antGrid";
+
+export interface ISimulatorProps {
+  width: number;
+  height: number;
+}
 
 export class Simulator extends React.Component<any, any> {
+  constructor(props: any) {
+    super(props);
+  }
+
   render() {
-    return ComingSoon();
+    return (
+      <AntGrid columns={100} rows={75} cellPixelWidth={10} lineColor="#ccc" />
+    );
   }
 }
