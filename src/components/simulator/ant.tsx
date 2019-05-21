@@ -18,13 +18,15 @@ export class Ant {
     this.genome = genome;
   }
 
-  public turn(state: number) {
-    const index = state % this.genome.length;
+  public turn(state: number): number {
+    const index = (state + 1) % this.genome.length;
     if (this.genome[index] === AntGene.L) {
       this.turnLeft();
     } else {
       this.turnRight();
     }
+
+    return index;
   }
 
   public get currentDirection() {
