@@ -22,18 +22,24 @@ export default class AntGrid extends React.Component<IAntGridProps, any> {
   componentDidMount() {
     if (null != this.element.current) {
       this.canvas = document.createElement("canvas") as HTMLCanvasElement;
-      this.canvas.width =
-        this.props.columns * this.props.cellPixelWidth +
-        this.props.columns * this.LINE_WIDTH +
-        this.LINE_WIDTH;
-      this.canvas.height =
-        this.props.rows * this.props.cellPixelWidth +
-        this.props.rows * this.LINE_WIDTH +
-        this.LINE_WIDTH;
+      this.canvas.width = this.calculateCanvasWidth();
+      this.canvas.height = this.calculateCanvasHeight();
       this.element.current.innerHTML = "";
       this.element.current.appendChild(this.canvas);
-      this.drawGrid();
+      this.drawGrid(); this.calculateCanvasHeight();
     }
+  }
+
+  calculateCanvasWidth() {
+    return this.props.columns * this.props.cellPixelWidth +
+      this.props.columns * this.LINE_WIDTH +
+      this.LINE_WIDTH
+  }
+
+  calculateCanvasHeight() {
+    return this.props.rows * this.props.cellPixelWidth +
+      this.props.rows * this.LINE_WIDTH +
+      this.LINE_WIDTH;
   }
 
   drawGrid() {
