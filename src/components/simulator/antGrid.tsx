@@ -1,16 +1,23 @@
 import React from "react";
-import { error } from "util";
+
+export interface ICellState {
+  row: number;
+  column: number;
+  color: string;
+}
 
 export interface IAntGridProps {
   columns: number;
   rows: number;
   cellPixelWidth: number;
   lineColor: string;
+  updateState: () => ICellState[]
 }
 
 export default class AntGrid extends React.Component<IAntGridProps, any> {
   private rootRef: React.RefObject<HTMLDivElement>;
   private canvas: HTMLCanvasElement | null;
+  private animateID = 0;
 
   private readonly LINE_WIDTH = 2;
 
@@ -33,7 +40,20 @@ export default class AntGrid extends React.Component<IAntGridProps, any> {
 
       // Now we can draw the grid on the canvas
       this.drawGrid();
+      this.animateID = window.requestAnimationFrame(this.animate);
     }
+  }
+
+  componentWillUnmount() {
+    window.cancelAnimationFrame(this.animateID);
+  }
+
+  animate = () => {
+    const updates: ICellState[] = this.props.updateState();
+    updates.forEach(update => {
+      this.fillCell(update.row, update.column, update.color);
+    });
+    this.animateID = window.requestAnimationFrame(this.animate);
   }
 
   /** Calculates the pixel width of the canvas based on the number of columns requested */
