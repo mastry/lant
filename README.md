@@ -1,3 +1,5 @@
+[![Build Status](https://dev.azure.com/mastry/Langtons%20Ant%20Simulator/_apis/build/status/Langtons%20Ant%20Simulator?branchName=master)](https://dev.azure.com/mastry/Langtons%20Ant%20Simulator/_build/latest?definitionId=1&branchName=master)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
