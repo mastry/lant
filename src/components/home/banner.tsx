@@ -24,7 +24,7 @@ export function Banner(props: any) {
       <Row className="mt-5">
         <Col>
           <Card>
-            <CardBody className="bg=light">
+            <CardBody className="bg-light">
               <CardText>
                 Learn more about Lanton's Ant with these resources.
               </CardText>
