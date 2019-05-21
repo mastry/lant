@@ -8,24 +8,26 @@ export interface IAntGridProps {
 }
 
 export default class AntGrid extends React.Component<IAntGridProps, any> {
-  private element: React.RefObject<HTMLDivElement>;
+  private rootRef: React.RefObject<HTMLDivElement>;
   private canvas: HTMLCanvasElement | null;
 
   private readonly LINE_WIDTH = 2;
 
   constructor(props: IAntGridProps) {
     super(props);
-    this.element = React.createRef();
+    this.rootRef = React.createRef();
     this.canvas = null;
   }
 
   componentDidMount() {
-    if (null != this.element.current) {
+    if (null != this.rootRef.current) {
       this.canvas = document.createElement("canvas") as HTMLCanvasElement;
       this.canvas.width = this.calculateCanvasWidth();
       this.canvas.height = this.calculateCanvasHeight();
-      this.element.current.innerHTML = "";
-      this.element.current.appendChild(this.canvas);
+
+      // Add the canvas to the root element
+      this.rootRef.current.innerHTML = "";
+      this.rootRef.current.appendChild(this.canvas);
       this.drawGrid(); this.calculateCanvasHeight();
     }
   }
@@ -70,6 +72,6 @@ export default class AntGrid extends React.Component<IAntGridProps, any> {
   }
 
   render() {
-    return <div ref={this.element} />;
+    return <div ref={this.rootRef} />;
   }
 }
