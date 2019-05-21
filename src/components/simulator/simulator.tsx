@@ -1,25 +1,34 @@
 import React from "react";
+import { Row, Col, Navbar, NavbarBrand, Container, Button } from "reactstrap";
 import AntGrid, { ICellState } from "./antGrid";
 import { Ant } from "./ant";
 import { LangtonAnt } from "./langtonAnt";
 import GridState from "./gridState";
+import { Logo } from "../shared/logo";
+import Play from "../../images/play.svg"
+import Stop from "../../images/stop.svg"
 
 export interface IProps {
   columns: number;
   rows: number;
 }
 
-export class Simulator extends React.Component<IProps, any> {
+interface IState {
+  isRunning: boolean; // true when the simulation is running
+}
+
+export class Simulator extends React.Component<IProps, IState> {
   private ant: Ant;
 
   // The current ant position
   private position: [number, number];
 
-  // A sparse map of current cell states
   private gridState: GridState;
 
   constructor(props: IProps) {
     super(props);
+
+    this.state = { isRunning: false };
 
     // Create a standard Langton Ant for now (enable runtime customization later)
     this.ant = new LangtonAnt();
@@ -28,7 +37,10 @@ export class Simulator extends React.Component<IProps, any> {
   }
 
   /** Updates the state of the current cell. Called by AntGrid created in render() */
-  updateState = (): ICellState => {
+  updateState = (): ICellState | null => {
+    const { isRunning } = this.state;
+    if (!isRunning) { return null };
+
     const state = this.gridState.get(this.position);
     const newState = this.ant.turn(state);
 
@@ -72,14 +84,44 @@ export class Simulator extends React.Component<IProps, any> {
     }
   }
 
+  handleStartStop = () => {
+    const { isRunning } = this.state;
+    this.setState({ isRunning: !isRunning });
+    console.log(`running: ${this.state.isRunning}`)
+  }
+
   render() {
+
+    const { isRunning } = this.state;
+
     return (
-      <AntGrid
-        columns={this.props.columns}
-        rows={this.props.rows}
-        cellPixelWidth={10}
-        lineColor="#ccc"
-        updateState={this.updateState} />
+      <Container className="w100">
+        <Row>
+          <Col>
+            <Navbar dark expand="lg" color="dark" >
+              <NavbarBrand href="/" className="mr-4">
+                <Logo width={48} height={48} light />Langton's Ant Simulator
+              </NavbarBrand>
+              <div className="ml-auto">
+                <Button color={isRunning ? "danger" : "success"} className="ml-4 mr-1" onClick={() => { this.handleStartStop() }}>
+                  <img src={isRunning ? Stop : Play} width={32} height={32} alt="" />
+                </Button>
+              </div>
+            </Navbar>
+          </Col>
+        </Row>
+
+        <Row className="mt-3">
+          <Col>
+            <AntGrid
+              columns={this.props.columns}
+              rows={this.props.rows}
+              cellPixelWidth={10}
+              lineColor="#ccc"
+              updateState={this.updateState} />
+          </Col>
+        </Row>
+      </Container>
     );
   }
 }

@@ -11,7 +11,7 @@ export interface IAntGridProps {
   rows: number;
   cellPixelWidth: number;
   lineColor: string;
-  updateState: () => ICellState
+  updateState: () => ICellState | null
 }
 
 export default class AntGrid extends React.Component<IAntGridProps, any> {
@@ -49,9 +49,12 @@ export default class AntGrid extends React.Component<IAntGridProps, any> {
   }
 
   animate = () => {
-    const update: ICellState = this.props.updateState();
-    this.fillCell(update.row, update.column, update.color);
+    const update: ICellState | null = this.props.updateState();
+    if (update != null) {
+      this.fillCell(update.row, update.column, update.color);
+    }
     this.animateID = window.requestAnimationFrame(this.animate);
+
   }
 
   /** Calculates the pixel width of the canvas based on the number of columns requested */

@@ -12,7 +12,7 @@ const App: React.FC = () => {
       <Switch>
         <Route path="/resources" component={Resources} />
         <Route path="/gallery" component={Gallery} />
-        <Route path="/simulator" render={() => <Simulator columns={100} rows={75} />} />
+        <Route path="/simulator" render={() => <Simulator columns={92} rows={75} />} />
         <Route path="/" component={Home} />
       </Switch>
     </div>
