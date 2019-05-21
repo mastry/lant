@@ -21,6 +21,7 @@ export default class AntGrid extends React.Component<IAntGridProps, any> {
 
   componentDidMount() {
     if (null != this.rootRef.current) {
+      // Create the canvas
       this.canvas = document.createElement("canvas") as HTMLCanvasElement;
       this.canvas.width = this.calculateCanvasWidth();
       this.canvas.height = this.calculateCanvasHeight();
@@ -28,22 +29,27 @@ export default class AntGrid extends React.Component<IAntGridProps, any> {
       // Add the canvas to the root element
       this.rootRef.current.innerHTML = "";
       this.rootRef.current.appendChild(this.canvas);
-      this.drawGrid(); this.calculateCanvasHeight();
+
+      // Now we can draw the grid on the canvas
+      this.drawGrid();
     }
   }
 
+  /** Calculates the pixel width of the canvas based on the number of columns requested */
   calculateCanvasWidth() {
     return this.props.columns * this.props.cellPixelWidth +
       this.props.columns * this.LINE_WIDTH +
       this.LINE_WIDTH
   }
 
+  /** Calculates the pixel height of the canvas based on the number of rows requested */
   calculateCanvasHeight() {
     return this.props.rows * this.props.cellPixelWidth +
       this.props.rows * this.LINE_WIDTH +
       this.LINE_WIDTH;
   }
 
+  /** Draws a blank grid on the entire canvas */
   drawGrid() {
     if (null != this.canvas) {
       const drawContext = this.canvas.getContext("2d");
@@ -71,7 +77,46 @@ export default class AntGrid extends React.Component<IAntGridProps, any> {
     }
   }
 
+  /** Fills the cell at the specified row/column with the a color */
+  fillCell(row: number, column: number, color: string) {
+
+    if (null != this.canvas) {
+      const [x, y] = this.calculateCellCoords(row, column);
+
+      const drawContext = this.canvas.getContext("2d");
+      if (null == drawContext)
+        throw Error("Can't get 2D drawing context for canvas.");
+
+      drawContext.fillStyle = color;
+      drawContext.fillRect(
+        x,
+        y,
+        this.props.cellPixelWidth,
+        this.props.cellPixelWidth
+      );
+    }
+  }
+
+  /**  Returns the upper left coordinate of the specified cell */
+  calculateCellCoords(row: number, column: number): [number, number] {
+    const x =
+      column * this.props.cellPixelWidth +
+      column * this.LINE_WIDTH +
+      this.LINE_WIDTH;
+
+    const y =
+      row * this.props.cellPixelWidth +
+      row * this.LINE_WIDTH +
+      this.LINE_WIDTH;
+
+    return [x, y];
+  }
+
   render() {
+    // We render a simple DIV element here and then insert the 
+    // canvas in componentDidMount(). We need the ref so we
+    // know where to insert the canvas later. See React 
+    // docs on ref.
     return <div ref={this.rootRef} />;
   }
 }
