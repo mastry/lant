@@ -1,4 +1,5 @@
 import React from "react";
+import { error } from "util";
 
 export interface IAntGridProps {
   columns: number;
@@ -59,6 +60,7 @@ export default class AntGrid extends React.Component<IAntGridProps, any> {
       drawContext.lineWidth = this.LINE_WIDTH;
       drawContext.strokeStyle = this.props.lineColor;
 
+      // Draw vertical lines
       for (let column = 0; column <= this.props.columns; column++) {
         const x =
           column * this.props.cellPixelWidth + column * this.LINE_WIDTH + 1;
@@ -68,6 +70,7 @@ export default class AntGrid extends React.Component<IAntGridProps, any> {
         drawContext.stroke();
       }
 
+      // Draw horizontal lines
       for (let row = 0; row <= this.props.columns; row++) {
         const y = row * this.props.cellPixelWidth + row * this.LINE_WIDTH + 1;
         drawContext.moveTo(0, y);
@@ -80,12 +83,17 @@ export default class AntGrid extends React.Component<IAntGridProps, any> {
   /** Fills the cell at the specified row/column with the a color */
   fillCell(row: number, column: number, color: string) {
 
+    // Don't draw cells that are not visible
+    if (row < 0 || column < 0 || row > this.props.rows || column > this.props.columns) {
+      return;
+    }
+
     if (null != this.canvas) {
       const [x, y] = this.calculateCellCoords(row, column);
 
       const drawContext = this.canvas.getContext("2d");
       if (null == drawContext)
-        throw Error("Can't get 2D drawing context for canvas.");
+        throw Error("Can't get 2D drawing context for canvas");
 
       drawContext.fillStyle = color;
       drawContext.fillRect(
