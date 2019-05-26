@@ -8,7 +8,9 @@ import {
   Card,
   CardText,
   CardLink,
-  CardBody
+  CardBody,
+  CardDeck,
+  CardHeader
 } from "reactstrap";
 import { Quotes } from "./quotes";
 
@@ -22,8 +24,9 @@ export function Banner(props: any) {
       </div>
       <hr className="my-2" />
       <Row className="mt-5">
-        <Col>
+        <CardDeck>
           <Card>
+            <CardHeader>Learn</CardHeader>
             <CardBody className="bg-light">
               <CardText>
                 Learn more about Lanton's Ant with these resources.
@@ -31,10 +34,9 @@ export function Banner(props: any) {
               <CardLink href="/resources">View Resources</CardLink>
             </CardBody>
           </Card>
-        </Col>
 
-        <Col>
           <Card>
+            <CardHeader>Play</CardHeader>
             <CardBody className="bg-light">
               <CardText>
                 Start the ant simulator and generate your own masterpiece.
@@ -42,16 +44,15 @@ export function Banner(props: any) {
               <CardLink href="/simulator">Run Simulator</CardLink>
             </CardBody>
           </Card>
-        </Col>
 
-        <Col>
           <Card>
+            <CardHeader>Gawk</CardHeader>
             <CardBody className="bg-light">
               <CardText>See what others have created in the gallery.</CardText>
               <CardLink href="/gallery">Open Gallery</CardLink>
             </CardBody>
           </Card>
-        </Col>
+        </CardDeck>
       </Row>
     </Jumbotron>
   );
