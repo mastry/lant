@@ -4,7 +4,7 @@ import AntGrid, { ICellState } from "./antGrid";
 import { Ant } from "./ant";
 import { LangtonAnt } from "./langtonAnt";
 import GridState from "./gridState";
-import { Logo } from "../shared/logo";
+import AntBar from '../shared/antBar';
 import Play from "../../images/play.svg"
 import Stop from "../../images/stop.svg"
 
@@ -96,20 +96,11 @@ export class Simulator extends React.Component<IProps, IState> {
 
     return (
       <Container className="w100">
-        <Row>
-          <Col>
-            <Navbar dark expand="lg" color="dark" >
-              <NavbarBrand href="/" className="mr-4">
-                <Logo width={48} height={48} light />Langton's Ant Simulator
-              </NavbarBrand>
-              <div className="ml-auto">
-                <Button color={isRunning ? "danger" : "success"} className="ml-4 mr-1" onClick={() => { this.handleStartStop() }}>
-                  <img src={isRunning ? Stop : Play} width={32} height={32} alt="" />
-                </Button>
-              </div>
-            </Navbar>
-          </Col>
-        </Row>
+        <AntBar title="Simulator">
+          <Button color={isRunning ? "danger" : "success"} className="ml-4 mr-1" onClick={() => { this.handleStartStop() }}>
+            <img src={isRunning ? Stop : Play} width={32} height={32} alt="" />
+          </Button>
+        </AntBar>
 
         <Row className="mt-3">
           <Col>
