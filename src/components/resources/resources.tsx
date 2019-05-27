@@ -6,7 +6,7 @@ export class Resources extends React.Component<any, any> {
   render() {
     return (
       <Container>
-        <AntBar title="Resources" />
+        <AntBar title="Resources"></AntBar>
         <CardDeck className="mt-5">
           <Card>
             <CardHeader>Wikipedia</CardHeader>
