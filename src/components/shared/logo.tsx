@@ -9,6 +9,7 @@ export interface ILogoProps {
   dark?: boolean;
 }
 
+/** The lant logo (thanks to FELIX FX and the Noun Project) */
 export function Logo(props: ILogoProps) {
   return (
     <img

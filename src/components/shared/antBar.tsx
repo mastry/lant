@@ -7,7 +7,7 @@ export interface IProps {
     title: string,
     children?: React.ReactFragment
 }
-
+/** A simple navigation bar that includes the ant logo */
 const AntBar: React.FC<IProps> = (props: IProps) => {
     return (
         <Row>

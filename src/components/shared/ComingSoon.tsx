@@ -2,6 +2,7 @@ import React from "react";
 import { Row, Col, Container } from "reactstrap";
 import { Logo } from "./logo";
 
+/** An ant logo placeholder for a future component */
 function ComingSoon() {
   return (
     <Container>
