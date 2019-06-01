@@ -6,7 +6,7 @@ export interface IQuoteProps {
 }
 
 interface IQuoteState {
-  quote: number;
+  quoteIndex: number;
   quoteIsVisible: boolean;
 }
 
@@ -15,7 +15,7 @@ export class Quotes extends React.Component<IQuoteProps, IQuoteState> {
 
   constructor(props: IQuoteProps) {
     super(props);
-    this.state = { quote: 0, quoteIsVisible: true };
+    this.state = { quoteIndex: 0, quoteIsVisible: true };
     this.timerID = 0;
   }
 
@@ -40,7 +40,7 @@ export class Quotes extends React.Component<IQuoteProps, IQuoteState> {
     // Show the next quote in 250ms
     await this.sleep(250);
     this.setState({
-      quote: this.state.quote + 1,
+      quoteIndex: (this.state.quoteIndex + 1) % this.quotes.length,
       quoteIsVisible: true
     });
 
@@ -61,12 +61,10 @@ export class Quotes extends React.Component<IQuoteProps, IQuoteState> {
   ];
 
   render() {
-    const currentQuote = this.state.quote % this.quotes.length;
-
     return (
       <Fade in={this.state.quoteIsVisible} className="text-monospace">
         <div className="pl-10">
-          <div>"{this.quotes[currentQuote]}"</div>
+          <div>"{this.quotes[this.state.quoteIndex]}"</div>
           <div className="font-italic pt-1">&mdash; C.G. Langton</div>
         </div>
       </Fade>
