@@ -2,6 +2,7 @@ import React from "react";
 import { Container, CardDeck } from "reactstrap";
 import AntBar from "../shared/antBar";
 import ResourceCard from './resourceCard';
+import VideoCard from './videoCard';
 
 export class Resources extends React.Component<any, any> {
   render() {
@@ -28,6 +29,23 @@ export class Resources extends React.Component<any, any> {
             title="Complexity of Langton’s ant"
             link="http://www.dim.uchile.cl/~anmoreir/oficial/langton_dam.pdf"
             text="The virtual ant introduced by Langton has an interesting behavior, which has been studied in several contexts. Here we give a construction to calculate anyboolean circuit with the trajectory of a single ant..."
+          />
+        </CardDeck>
+        <CardDeck className="mt-4">
+          <VideoCard
+            header="Jim MacArthur"
+            title="Mechanical Langton's Ant"
+            video="ZvXPeds7upM"
+          />
+          <VideoCard
+            header="Azzi"
+            title="256³ colorspace"
+            video="h6MAOizorrQ"
+          />
+          <VideoCard
+            header="MrBluesbyrd"
+            title="Langton's Ant Colonies"
+            video="w6XQQhCgq5c"
           />
         </CardDeck>
       </Container>);

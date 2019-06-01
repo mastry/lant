@@ -5,7 +5,7 @@ export interface IProps {
     header: string,
     title: string,
     text: string,
-    link: string
+    link: string,
 }
 
 const ResourceCard: React.FC<IProps> = (props: IProps) => {
@@ -14,9 +14,7 @@ const ResourceCard: React.FC<IProps> = (props: IProps) => {
             <CardHeader>{props.header}</CardHeader>
             <CardBody>
                 <CardTitle className="font-weight-bold">{props.title}</CardTitle>
-                <CardText>
-                    {props.text}
-                </CardText>
+                <CardText>{props.text}</CardText>
             </CardBody>
             <CardFooter>
                 <CardLink href={props.link}>Open</CardLink>
