@@ -5,7 +5,12 @@ export interface IQuoteProps {
   delay: number;
 }
 
-export class Quotes extends React.Component<IQuoteProps, any> {
+interface IQuoteState {
+  quote: number;
+  quoteIsVisible: boolean;
+}
+
+export class Quotes extends React.Component<IQuoteProps, IQuoteState> {
   private timerID: number;
 
   constructor(props: IQuoteProps) {
