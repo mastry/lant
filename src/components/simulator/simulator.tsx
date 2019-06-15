@@ -1,12 +1,12 @@
 import React from "react";
-import { Row, Col, Navbar, NavbarBrand, Container, Button } from "reactstrap";
+import { Row, Col, Container, Button, Badge } from "reactstrap";
 import AntGrid, { ICellState } from "./antGrid";
 import { Ant } from "./ant";
 import { LangtonAnt } from "./langtonAnt";
 import GridState from "./gridState";
-import AntBar from '../shared/antBar';
-import Play from "../../images/play.svg"
-import Stop from "../../images/stop.svg"
+import AntBar from "../shared/antBar";
+import Play from "../../images/play.svg";
+import Stop from "../../images/stop.svg";
 
 export interface IProps {
   columns: number;
@@ -14,7 +14,11 @@ export interface IProps {
 }
 
 interface IState {
-  isRunning: boolean; // true when the simulation is running
+  /** True only when the simulation is running */
+  isRunning: boolean;
+
+  /** The number of turns that have elapssed in the simulation */
+  elapsed: number;
 }
 
 export class Simulator extends React.Component<IProps, IState> {
@@ -28,7 +32,7 @@ export class Simulator extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
 
-    this.state = { isRunning: false };
+    this.state = { isRunning: false, elapsed: 0 };
 
     // Create a standard Langton Ant for now (enable runtime customization later)
     this.ant = new LangtonAnt();
@@ -38,23 +42,24 @@ export class Simulator extends React.Component<IProps, IState> {
 
   /** Updates the state of the current cell. Called by AntGrid created in render() */
   updateState = (): ICellState | null => {
-    const { isRunning } = this.state;
-    if (!isRunning) { return null };
+    if (!this.state.isRunning) {
+      return null;
+    }
 
     const state = this.gridState.get(this.position);
     const newState = this.ant.turn(state);
 
     this.gridState.set(this.position, newState);
 
-    const update = {
+    const cellState = {
       row: this.position[0],
       column: this.position[1],
       color: this.getColorForState(newState)
     };
 
     this.moveAnt();
-    return update;
-  }
+    return cellState;
+  };
 
   /** Returns the position of the ant at the start of the simulation (center of grid) */
   getStartPosition(): [number, number] {
@@ -82,22 +87,29 @@ export class Simulator extends React.Component<IProps, IState> {
         this.position[0] -= 1;
         break;
     }
+
+    this.setState({ elapsed: this.state.elapsed + 1 });
   }
 
   handleStartStop = () => {
     const { isRunning } = this.state;
     this.setState({ isRunning: !isRunning });
-    console.log(`running: ${this.state.isRunning}`)
-  }
+  };
 
   render() {
-
     const { isRunning } = this.state;
 
     return (
       <Container className="w100">
         <AntBar title="Simulator">
-          <Button color={isRunning ? "danger" : "success"} className="ml-4 mr-1" onClick={() => { this.handleStartStop() }}>
+          <Badge color="primary">{this.state.elapsed}</Badge>
+          <Button
+            color={isRunning ? "danger" : "success"}
+            className="ml-4 mr-1"
+            onClick={() => {
+              this.handleStartStop();
+            }}
+          >
             <img src={isRunning ? Stop : Play} width={32} height={32} alt="" />
           </Button>
         </AntBar>
@@ -109,7 +121,8 @@ export class Simulator extends React.Component<IProps, IState> {
               rows={this.props.rows}
               cellPixelWidth={10}
               lineColor="#ccc"
-              updateState={this.updateState} />
+              updateState={this.updateState}
+            />
           </Col>
         </Row>
       </Container>
