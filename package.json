@@ -13,7 +13,7 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.1",
-    "react-scripts": "3.0.0",
+    "react-scripts": "^3.0.1",
     "reactstrap": "^8.0.0",
     "typescript": "3.4.4"
   },
@@ -21,6 +21,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "update-tools": "npm install react-scripts@latest",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
