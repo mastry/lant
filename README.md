@@ -1,4 +1,4 @@
-[![Build Status](https://dev.azure.com/mastry/Langtons%20Ant%20Simulator/_apis/build/status/mastry.lant?branchName=master)](https://dev.azure.com/mastry/Langtons%20Ant%20Simulator/_build/latest?definitionId=2&branchName=master)
+[![Build Status](https://dev.azure.com/mastry/Lant%20Pipeline/_apis/build/status/lant%20-%201%20-%20CI?branchName=master)](https://dev.azure.com/mastry/Lant%20Pipeline/_build/latest?definitionId=4&branchName=master)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
