@@ -1,3 +1,5 @@
+import Coordinate from "./coordinate";
+
 /** Maps position tuples to state values */
 export default class GridState {
   private _state: Map<string, number>;
@@ -8,15 +10,15 @@ export default class GridState {
 
   /** Returns the state of the grid at the specified position,
    * or zero if that position is undefined  */
-  get(position: [number, number]): number {
-    const key = this.getKey(position);
+  get(position: Coordinate): number {
+    const key = this.getKey([position.row, position.column]);
     const state = this._state.get(key);
     return state === undefined ? 0 : state;
   }
 
   /** Sets the state at the specified position  */
-  set(position: [number, number], state: number) {
-    const key = this.getKey(position);
+  set(position: Coordinate, state: number) {
+    const key = this.getKey([position.row, position.column]);
     this._state.set(key, state);
   }
 

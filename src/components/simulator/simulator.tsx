@@ -7,6 +7,7 @@ import GridState from "./gridState";
 import AntBar from "../shared/antBar";
 import Play from "../../images/play.svg";
 import Stop from "../../images/stop.svg";
+import Coordinate from "./coordinate";
 
 export interface IProps {
   columns: number;
@@ -25,7 +26,7 @@ export class Simulator extends React.Component<IProps, IState> {
   private ant: Ant;
 
   // The current ant position
-  private position: [number, number];
+  private position: Coordinate;
 
   private gridState: GridState;
 
@@ -52,8 +53,8 @@ export class Simulator extends React.Component<IProps, IState> {
     this.gridState.set(this.position, newState);
 
     const cellState = {
-      row: this.position[0],
-      column: this.position[1],
+      row: this.position.row,
+      column: this.position.column,
       color: this.getColorForState(newState)
     };
 
@@ -62,10 +63,10 @@ export class Simulator extends React.Component<IProps, IState> {
   };
 
   /** Returns the position of the ant at the start of the simulation (center of grid) */
-  getStartPosition(): [number, number] {
+  getStartPosition(): Coordinate {
     const row = Math.ceil(this.props.rows / 2);
     const column = Math.ceil(this.props.columns / 2);
-    return [row, column];
+    return new Coordinate(row, column);
   }
 
   getColorForState(state: number): string {
@@ -75,16 +76,16 @@ export class Simulator extends React.Component<IProps, IState> {
   moveAnt() {
     switch (this.ant.currentDirection) {
       case 0:
-        this.position[1] += 1;
+        this.position.column += 1;
         break;
       case 90:
-        this.position[0] += 1;
+        this.position.row += 1;
         break;
       case 180:
-        this.position[1] -= 1;
+        this.position.column -= 1;
         break;
       default:
-        this.position[0] -= 1;
+        this.position.row -= 1;
         break;
     }
 
