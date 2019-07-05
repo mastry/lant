@@ -20,25 +20,28 @@ interface IState {
 
   /** The number of turns that have elapssed in the simulation */
   elapsed: number;
+
+  //** The current row and column of the ant */
+  position: Coordinate;
 }
 
 export class Simulator extends React.Component<IProps, IState> {
   private ant: Ant;
-
-  // The current ant position
-  private position: Coordinate;
 
   private gridState: GridState;
 
   constructor(props: IProps) {
     super(props);
 
-    this.state = { isRunning: false, elapsed: 0 };
-
     // Create a standard Langton Ant for now (enable runtime customization later)
     this.ant = new LangtonAnt();
     this.gridState = new GridState();
-    this.position = this.getStartPosition();
+
+    this.state = {
+      isRunning: false,
+      elapsed: 0,
+      position: this.getStartPosition()
+    };
   }
 
   /** Updates the state of the current cell. Called by AntGrid created in render() */
@@ -47,14 +50,16 @@ export class Simulator extends React.Component<IProps, IState> {
       return null;
     }
 
-    const state = this.gridState.get(this.position);
+    const { position } = this.state;
+
+    const state = this.gridState.get(position);
     const newState = this.ant.turn(state);
 
-    this.gridState.set(this.position, newState);
+    this.gridState.set(position, newState);
 
     const cellState = {
-      row: this.position.row,
-      column: this.position.column,
+      row: position.row,
+      column: position.column,
       color: this.getColorForState(newState)
     };
 
@@ -74,22 +79,24 @@ export class Simulator extends React.Component<IProps, IState> {
   }
 
   moveAnt() {
+    var { position } = this.state;
+
     switch (this.ant.currentDirection) {
       case 0:
-        this.position.column += 1;
+        position.column += 1;
         break;
       case 90:
-        this.position.row += 1;
+        position.row += 1;
         break;
       case 180:
-        this.position.column -= 1;
+        position.column -= 1;
         break;
       default:
-        this.position.row -= 1;
+        position.row -= 1;
         break;
     }
 
-    this.setState({ elapsed: this.state.elapsed + 1 });
+    this.setState({ elapsed: this.state.elapsed + 1, position: position });
   }
 
   handleStartStop = () => {
