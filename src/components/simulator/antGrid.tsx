@@ -11,7 +11,7 @@ export interface IAntGridProps {
   rows: number;
   cellPixelWidth: number;
   lineColor: string;
-  updateState: () => ICellState | null
+  updateState: () => ICellState | null;
 }
 
 export default class AntGrid extends React.Component<IAntGridProps, any> {
@@ -54,21 +54,24 @@ export default class AntGrid extends React.Component<IAntGridProps, any> {
       this.fillCell(update.row, update.column, update.color);
     }
     this.animateID = window.requestAnimationFrame(this.animate);
-
-  }
+  };
 
   /** Calculates the pixel width of the canvas based on the number of columns requested */
   calculateCanvasWidth() {
-    return this.props.columns * this.props.cellPixelWidth +
+    return (
+      this.props.columns * this.props.cellPixelWidth +
       this.props.columns * this.LINE_WIDTH +
       this.LINE_WIDTH
+    );
   }
 
   /** Calculates the pixel height of the canvas based on the number of rows requested */
   calculateCanvasHeight() {
-    return this.props.rows * this.props.cellPixelWidth +
+    return (
+      this.props.rows * this.props.cellPixelWidth +
       this.props.rows * this.LINE_WIDTH +
-      this.LINE_WIDTH;
+      this.LINE_WIDTH
+    );
   }
 
   /** Draws a blank grid on the entire canvas */
@@ -103,9 +106,13 @@ export default class AntGrid extends React.Component<IAntGridProps, any> {
 
   /** Fills the cell at the specified row/column with the a color */
   fillCell(row: number, column: number, color: string) {
-
     // Don't draw cells that are not visible
-    if (row < 0 || column < 0 || row > this.props.rows || column > this.props.columns) {
+    if (
+      row < 0 ||
+      column < 0 ||
+      row > this.props.rows ||
+      column > this.props.columns
+    ) {
       return;
     }
 
@@ -134,17 +141,15 @@ export default class AntGrid extends React.Component<IAntGridProps, any> {
       this.LINE_WIDTH;
 
     const y =
-      row * this.props.cellPixelWidth +
-      row * this.LINE_WIDTH +
-      this.LINE_WIDTH;
+      row * this.props.cellPixelWidth + row * this.LINE_WIDTH + this.LINE_WIDTH;
 
     return [x, y];
   }
 
   render() {
-    // We render a simple DIV element here and then insert the 
+    // We render a simple DIV element here and then insert the
     // canvas in componentDidMount(). We need the ref so we
-    // know where to insert the canvas later. See React 
+    // know where to insert the canvas later. See React
     // docs on ref.
     return <div ref={this.rootRef} />;
   }
