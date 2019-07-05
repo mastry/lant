@@ -1,4 +1,5 @@
 import React from "react";
+import Coordinate from "./coordinate";
 
 export interface ICellState {
   row: number;
@@ -11,7 +12,7 @@ export interface IAntGridProps {
   rows: number;
   cellPixelWidth: number;
   lineColor: string;
-  updateState: () => ICellState | null;
+  updateState: () => [ICellState, ICellState] | null;
 }
 
 export default class AntGrid extends React.Component<IAntGridProps, any> {
@@ -49,9 +50,10 @@ export default class AntGrid extends React.Component<IAntGridProps, any> {
   }
 
   animate = () => {
-    const update: ICellState | null = this.props.updateState();
+    const update: [ICellState, ICellState] | null = this.props.updateState();
     if (update != null) {
-      this.fillCell(update.row, update.column, update.color);
+      this.fillCell(update[0].row, update[0].column, update[0].color);
+      this.fillCell(update[1].row, update[1].column, update[1].color);
     }
     this.animateID = window.requestAnimationFrame(this.animate);
   };

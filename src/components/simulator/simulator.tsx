@@ -45,7 +45,7 @@ export class Simulator extends React.Component<IProps, IState> {
   }
 
   /** Updates the state of the current cell. Called by AntGrid created in render() */
-  updateState = (): ICellState | null => {
+  updateState = (): [ICellState, ICellState] | null => {
     if (!this.state.isRunning) {
       return null;
     }
@@ -64,7 +64,10 @@ export class Simulator extends React.Component<IProps, IState> {
     };
 
     this.moveAnt();
-    return cellState;
+    return [
+      cellState,
+      { row: position.row, column: position.column, color: "red" }
+    ];
   };
 
   /** Returns the position of the ant at the start of the simulation (center of grid) */
