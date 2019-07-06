@@ -12,7 +12,7 @@ export interface IAntGridProps {
   rows: number;
   cellPixelWidth: number;
   lineColor: string;
-  updateState: () => [ICellState, ICellState] | null;
+  updateState: () => Array<ICellState> | null;
 }
 
 export default class AntGrid extends React.Component<IAntGridProps, any> {
@@ -50,10 +50,11 @@ export default class AntGrid extends React.Component<IAntGridProps, any> {
   }
 
   animate = () => {
-    const update: [ICellState, ICellState] | null = this.props.updateState();
+    const update: Array<ICellState> | null = this.props.updateState();
     if (update != null) {
-      this.fillCell(update[0].row, update[0].column, update[0].color);
-      this.fillCell(update[1].row, update[1].column, update[1].color);
+      update.forEach(cell => {
+        this.fillCell(cell.row, cell.column, cell.color);
+      });
     }
     this.animateID = window.requestAnimationFrame(this.animate);
   };

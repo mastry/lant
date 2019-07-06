@@ -45,29 +45,35 @@ export class Simulator extends React.Component<IProps, IState> {
   }
 
   /** Updates the state of the current cell. Called by AntGrid created in render() */
-  updateState = (): [ICellState, ICellState] | null => {
+  updateState = (): Array<ICellState> | null => {
     if (!this.state.isRunning) {
       return null;
     }
 
+    // The ant modifies the state of the cell it is leaving
     const { position } = this.state;
-
     const state = this.gridState.get(position);
     const newState = this.ant.turn(state);
-
     this.gridState.set(position, newState);
 
-    const cellState = {
+    // We want to update the color of the cell the ant is leaving
+    const previousCell = {
       row: position.row,
       column: position.column,
       color: this.getColorForState(newState)
     };
 
     this.moveAnt();
-    return [
-      cellState,
-      { row: position.row, column: position.column, color: "red" }
-    ];
+
+    // We also want to set the color of the cell that the ant has moved to
+    const newPosition = this.state.position;
+    const antCell = {
+      row: newPosition.row,
+      column: newPosition.column,
+      color: "red"
+    };
+
+    return [previousCell, antCell];
   };
 
   /** Returns the position of the ant at the start of the simulation (center of grid) */
